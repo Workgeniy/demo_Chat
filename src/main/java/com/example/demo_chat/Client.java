@@ -21,48 +21,38 @@ public class Client {
     void connect() {
         try {
             socket = new Socket(host, port);
-            Random number = new Random();
-            oos = new ObjectOutputStream(
-                    socket.getOutputStream());
-            oos.writeObject("Client " + number.nextInt(100));
-            System.out.println();
-        }
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+        }catch(IOException e){
+            System.out.println("Vechno ne dozvonishsia");
         }
     }
 
     void bye() {
         try {
             socket.close();
-        }
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+        }catch(IOException e){
+            System.out.println("Vot i pogovorili...");
         }
     }
 
     void say(String msg) throws IOException {
-        oos = new ObjectOutputStream(
+         oos = new ObjectOutputStream(
                 socket.getOutputStream());
         oos.writeObject(msg);
         System.out.println(msg);
-        //oos.close();  // почему нельзя закрывать?
     }
 
     String listen() throws IOException {
-        String result = "";
-        ois = new ObjectInputStream(
+        String result = null;
+         ois = new ObjectInputStream(
                 socket.getInputStream());
         try {
             result = (String) ois.readObject ();
-        } catch (ClassNotFoundException cnf) {
-            cnf.getMessage();
+        } catch (ClassNotFoundException onf) {
+            System.out.printf("Cannot read ");
         }
-        System.out.println(result);
-       // ois.close();  // почему нельзя закрывать?
         return result;
     }
 
-
-
 }
+
+
